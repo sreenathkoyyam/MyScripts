@@ -28,3 +28,20 @@ Clear   :: will clear the terminal
 
 Rename and Delete
 ---------------------------
+touch forrest
+mv forrest green_forrest
+rm green_forrest
+mkdir new
+rm -R new   or rmdir new
+
+# Create Copies, Links to Files & Directories
+touch test
+cp test /appl/test
+
+Link
+----
+ln test new :: new will act as a replica for test
+
+soft link
+---------
+ln -s test test_soft  :: create a soft link and name it as test_soft
