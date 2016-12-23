@@ -1,3 +1,4 @@
+#!/bin/sh
 set echo on
 #remove output.json
 rm -r output.json
