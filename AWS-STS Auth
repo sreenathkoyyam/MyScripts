@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#setting the aws-account id
+CMD="$@"
+DEV_ACCOUNT_ID= *********
+
+#install jq
+#yum install wget
+#wget  -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
+#chmod +x ./jq
+#cp jq /usr/bin
+
+#setting role details
+ASSUME_ROLE="arn:aws:iam::${DEV_ACCOUNT_ID}:role/<role-name>"
+ROLE_SESSION_NAME="sts-demo-role-session"
+TMP_FILE=".temp_credentials"
+
+#generating temp tokken with aws sts
+aws sts assume-role --output json --role-arn ${ASSUME_ROLE} --role-session-name ${ROLE_SESSION_NAME} > ${TMP_FILE}
+
+ACCESS_KEY=$(cat ${TMP_FILE} | jq -r ".Credentials.AccessKeyId")
+SECRET_KEY=$(cat ${TMP_FILE} | jq -r ".Credentials.SecretAccessKey")
+SESSION_TOKEN=$(cat ${TMP_FILE} | jq -r ".Credentials.SessionToken")
+EXPIRATION=$(cat ${TMP_FILE} | jq -r ".Credentials.Expiration")
+# print the temp-session details
+echo "Retrieved temp access key ${ACCESS_KEY} for role ${ASSUME_ROLE}. Key will expire at ${EXPIRATION}"
+#Putting temporary credentials in environment variables
+AWS_ACCESS_KEY_ID=${ACCESS_KEY}
+AWS_SECRET_ACCESS_KEY=${SECRET_KEY}
+AWS_SESSION_TOKEN=${SESSION_TOKEN} ${CMD}
