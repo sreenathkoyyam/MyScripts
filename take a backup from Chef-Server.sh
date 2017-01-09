@@ -15,7 +15,7 @@ echo "Hooray!!It's available"
 if [ $s != "<serverName>" ];
 then
 #ssh to the node and exicute the backup and put it in nexus
-ssh -t  svc-coredevtools@"$s" 'sudo chef-backend-ctl backup; fname=`ls -1 /var/opt/chef-backup|tail -1`; echo $fname;curl -v -F r=PAAS -F hasPom=false -F e=zip -F g=ChefBackup -F a=$s -F v=$s -F p=zip -F file=/var/chef-backup/$fname -u <nexus username: Nexus Pass> https://<url>'
+ssh -t  username@"$s" 'sudo chef-backend-ctl backup; fname=`ls -1 /var/opt/chef-backup|tail -1`; echo $fname;curl -v -F r=PAAS -F hasPom=false -F e=zip -F g=ChefBackup -F a=$s -F v=$s -F p=zip -F file=/var/chef-backup/$fname -u <nexus username: Nexus Pass> https://<url>'
 #curl --upload-file $ZipFullPath -u username:password -v $Nexus/JenkinsBackup/$Jenkins/$BUILD_NUMBER/
 echo "Backup at /var/chef-backup/"
 else
