@@ -9,7 +9,7 @@ ls
  cat id_rsa.pub
 #And add this ssh key in server2
 # connect server using ssh
- ssh svc-coredevtools@pvcdlchebe001uk
+ ssh username@hostname
 
 
 server02
